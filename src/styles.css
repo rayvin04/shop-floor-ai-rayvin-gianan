@@ -106,12 +106,12 @@
   --sf-text: #1f2937;
   --sf-muted: #6b7280;
 
-  /* n8n chat theme overrides */
-  --chat--color-primary: #dc2626;
-  --chat--color-primary-shade-50: #b91c1c;
-  --chat--color-primary-shade-100: #991b1b;
+  /* n8n chat theme overrides (mapped to @n8n/chat@1.36.1 variable names) */
+  --chat--color--primary: #dc2626;
+  --chat--color--primary-shade-50: #b91c1c;
+  --chat--color--primary--shade-100: #991b1b;
 
-  --chat--color-secondary: #2563eb;
+  --chat--color--secondary: #2563eb;
   --chat--color-secondary-shade-50: #1d4ed8;
 
   --chat--color-white: #ffffff;
@@ -131,6 +131,8 @@
   --chat--window--height: 100%;
 
   --chat--header-height: 72px;
+  --chat--header--background: var(--chat--color--primary);
+  --chat--header--color: var(--chat--color-white);
 
   --chat--message--font-size: 15px;
 
@@ -139,6 +141,14 @@
   --chat--input--font-size: 15px;
 
   --chat--textarea--height: 56px;
+
+  --chat--input--send--button--background: var(--chat--color--primary);
+  --chat--input--send--button--color: var(--chat--color-white);
+  --chat--input--send--button--background-hover: var(--chat--color--primary-shade-50);
+  --chat--input--send--button--color-hover: var(--chat--color-white);
+
+  --chat--body--background: var(--chat--color-light);
+  --chat--footer--background: var(--chat--color-light);
 }
 
 .dark {
