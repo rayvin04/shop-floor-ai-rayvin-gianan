@@ -174,26 +174,4 @@ I would improve the interaction logging and audit trail. While the prototype alr
 
 The solution intentionally keeps the architecture simple. The primary objective was to demonstrate grounded AI, structured mock data, and AI tool calling. The implementation prioritizes reliability and clarity over unnecessary complexity.
 
-## GitHub Repository Topics
-
-These recommended GitHub repository topics can improve project discoverability:
-
-```text
-n8n
-ai-agent
-lovable
-google-gemini
-mistral-ai
-google-sheets
-workflow-automation
-tool-calling
-chatbot
-manufacturing
-shop-floor
-artificial-intelligence
-automation
-vercel
-heroku
-```
-
 > Developed as part of a Junior AI Engineer technical assessment using **n8n**, **Lovable**, **Google Gemini**, **Mistral AI**, and **Google Sheets** to demonstrate grounded AI, structured data retrieval, AI tool calling, and workflow automation.
