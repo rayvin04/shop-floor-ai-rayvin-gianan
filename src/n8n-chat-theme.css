@@ -201,3 +201,25 @@
 #n8n-chat .chat-footer:empty {
   display: none;
 }
+
+/* Fill the card: transcript grows, composer stays pinned to the bottom */
+#n8n-chat .chat-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+#n8n-chat .chat-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#n8n-chat .chat-messages-list {
+  height: 100%;
+  overflow-y: auto;
+}
+
+#n8n-chat .chat-footer,
+#n8n-chat .chat-inputs {
+  flex: 0 0 auto;
+}
