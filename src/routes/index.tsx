@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import "@n8n/chat/style.css";
+import "@/n8n-chat-theme.css";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -68,26 +69,28 @@ function Index() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-[var(--sf-background)] px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-      <div
-        className="flex w-full max-w-[1100px] flex-col gap-6"
-        style={{ minHeight: "calc(100vh - 64px)" }}
-      >
+    <main className="min-h-screen bg-[linear-gradient(180deg,#F8FAFC_0%,#EEF2FF_100%)] px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+      <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-8">
         <header className="shrink-0 text-center">
-          <h1 className="text-3xl font-semibold tracking-tight text-[var(--sf-text)] sm:text-4xl">
+          <span className="inline-flex items-center rounded-full bg-[#FEE2E2] px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#DC2626]">
+            ABC Cabinet
+          </span>
+          <h1 className="mt-5 text-4xl font-semibold tracking-tight text-[#1F2937] sm:text-5xl">
             Shop Floor Agent
           </h1>
-          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-[var(--sf-muted)] sm:text-lg">
-            AI assistant for verifying cabinet panels, workstation requirements, and
-            shop-floor procedures.
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#6B7280] sm:text-lg">
+            AI-powered assistant for verifying cabinet panels, workstation operations,
+            and production procedures.
           </p>
         </header>
 
-        <div
-          id="n8n-chat"
-          className="flex-1 overflow-hidden rounded-2xl bg-white shadow-[0_10px_40px_-12px_rgba(0,0,0,0.08)] ring-1 ring-[var(--sf-border)]"
-          aria-label="Shop Floor Agent chat"
-        />
+        <section className="mx-auto w-full rounded-[24px] border border-[#E5E7EB] bg-white p-4 shadow-[0_12px_40px_rgba(15,23,42,0.08)] sm:p-6">
+          <div
+            id="n8n-chat"
+            className="h-[80vh] min-h-[480px] w-full overflow-hidden rounded-[18px]"
+            aria-label="Shop Floor Agent chat"
+          />
+        </section>
       </div>
     </main>
   );
