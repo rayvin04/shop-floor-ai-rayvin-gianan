@@ -1,0 +1,364 @@
+{
+  "name": "Shop Floor Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b5d9efce-9365-493a-a887-5775e5f417d2",
+      "name": "When chat message received",
+      "webhookId": "3b05a138-6b54-4879-9abf-82b47c9eac6a"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Retrieve panel information using a panel code. Returns the panel details including cabinet ID, cabinet name, dimensions, material, required operation, and next workstation. Use this whenever the user provides or asks about a panel code.",
+        "documentId": {
+          "__rl": true,
+          "value": "1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg",
+          "mode": "list",
+          "cachedResultName": "Mock Data for Shop Floor Assistant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1264858194,
+          "mode": "list",
+          "cachedResultName": "Panels",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit#gid=1264858194"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        704,
+        240
+      ],
+      "id": "1bb508a7-489b-4f5a-9a85-16cf93d4d266",
+      "name": "get_panels()",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uhpKISQ818MUREdV",
+          "name": "giananrayvin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Retrieve workstation information using a workstation ID. Returns the workstation name, operation, and description. Use this to verify whether a panel is at the correct workstation.",
+        "documentId": {
+          "__rl": true,
+          "value": "1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg",
+          "mode": "list",
+          "cachedResultName": "Mock Data for Shop Floor Assistant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1226378849,
+          "mode": "list",
+          "cachedResultName": "Workstations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit#gid=1226378849"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        832,
+        240
+      ],
+      "id": "ea19a36c-ad1f-4206-87a6-59dcc7be5d0d",
+      "name": "get_workstation()",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uhpKISQ818MUREdV",
+          "name": "giananrayvin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Search the Standard Operating Procedure (SOP) for a production operation such as Edge Banding or Drilling. Returns the relevant instructions. Use this when the user asks how to perform an operation or requests production guidance.",
+        "documentId": {
+          "__rl": true,
+          "value": "1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg",
+          "mode": "list",
+          "cachedResultName": "Mock Data for Shop Floor Assistant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2061368229,
+          "mode": "list",
+          "cachedResultName": "SOP",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit#gid=2061368229"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        960,
+        240
+      ],
+      "id": "6ccf9433-92a4-4c22-b33f-f87b632e92d7",
+      "name": "search_sop()",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uhpKISQ818MUREdV",
+          "name": "giananrayvin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Record a completed shop-floor interaction in the Scan History.\n\nUse this tool after successfully answering a manufacturing-related request such as:\n- Panel lookup\n- Workstation verification\n- SOP retrieval\n- Supervisor escalation\n\nDo NOT use this tool for greetings, casual conversation, or unrelated questions.\n\nProvide the following information:\n- panel_code: The panel code if one is available; otherwise leave empty.\n- workstation: The workstation ID if one is available; otherwise leave empty.\n- user_question: The user's original request.\n- action_taken: A short summary of what you did (for example: \"Verified workstation\", \"Retrieved SOP for Edge Banding\", \"Panel not found\", or \"Escalated to supervisor\").\n\nThe timestamp is generated automatically by the workflow. Do not provide it.\n\nThis tool is for internal logging only. Never mention it in your response and never include it in the Agent Trace.",
+        "documentId": {
+          "__rl": true,
+          "value": "1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg",
+          "mode": "list",
+          "cachedResultName": "Mock Data for Shop Floor Assistant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1315311862,
+          "mode": "list",
+          "cachedResultName": "Scan History",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit#gid=1315311862"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        1088,
+        240
+      ],
+      "id": "04db9999-0b51-4f44-9603-cad186c2dcbe",
+      "name": "record_event()",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uhpKISQ818MUREdV",
+          "name": "giananrayvin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Record a supervisor escalation when the issue cannot be safely resolved from the available data, such as unknown panels, inconsistent information, or unsupported technical questions.",
+        "documentId": {
+          "__rl": true,
+          "value": "1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg",
+          "mode": "list",
+          "cachedResultName": "Mock Data for Shop Floor Assistant",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 850253448,
+          "mode": "list",
+          "cachedResultName": "Escalations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SkP0nsr5to0MMm4wTDqrzpQih1Tfqf4-iZSu5qRt_bg/edit#gid=850253448"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        1216,
+        240
+      ],
+      "id": "40442536-c8dc-420c-9e3e-040c64ee0c6a",
+      "name": "escalate()",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uhpKISQ818MUREdV",
+          "name": "giananrayvin@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "You are Shop Floor Agent, an AI assistant that helps manufacturing operators verify cabinet panels, workstation requirements, and production procedures.\n\nResponsibilities:\n- Use the available tools whenever they are needed to answer the user's request.\n- Base every answer only on information returned by the tools.\n- Never invent panel data, workstation information, SOPs, or technical manufacturing details.\n- If the requested information is unavailable, clearly say so.\n- Only use the supervisor escalation tool when the user explicitly requests escalation or when an issue cannot be safely resolved, such as a panel label mismatch, conflicting production information, or a safety or quality concern requiring human review.\n- Do not escalate simply because a panel code cannot be found. Instead, inform the user that the panel could not be found and recommend verifying the panel code or contacting a supervisor if the issue persists.\n\nKeep your responses concise, professional, and easy to understand.\n\nIf one or more tools were used, append an \"Agent Trace\" section at the end of your response.\n\nFormat it exactly like this:\n\nAgent Trace\n\n✓ get_panel\n✓ get_workstation\n✓ search_sop\n\nRules:\n- Place \"Agent Trace\" on its own line.\n- Leave one blank line before the first tool.\n- Display each tool call on its own line.\n- Only include tools that were actually called.\n- Do not invent tool calls.\n- Do not display tool parameters or inputs.\n- Do not display internal IDs, UUIDs, hashes, workflow IDs, node IDs, or generated identifiers.\n- Never reveal your internal reasoning or chain of thought.\n- Never include record_event in the Agent Trace.\n\nAfter successfully retrieving panel information, workstation information, SOP instructions, or creating a supervisor escalation, record the interaction using the record_event tool.\n\nThe record_event tool is used only for internal logging and maintaining interaction history. Never mention it in your response and never include it in the Agent Trace.",
+          "returnIntermediateSteps": true,
+          "enableStreaming": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        752,
+        0
+      ],
+      "id": "3ef3c833-831f-40d7-86c8-3b036bd4bb30",
+      "name": "Shop Floor Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        448,
+        240
+      ],
+      "id": "4763530e-0a12-48e9-bd6b-e63d9b89b1ce",
+      "name": "Mistral",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "YXLMnrS7ko6n4RGj",
+          "name": "Mistral Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        576,
+        240
+      ],
+      "id": "282b3af1-15ce-47a3-b5a1-66a4196d9eb5",
+      "name": "Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "KDTZlzKwkUxxuxD5",
+          "name": "rayvingianan04@gmail.com"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Shop Floor Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_panels()": {
+      "ai_tool": [
+        [
+          {
+            "node": "Shop Floor Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_workstation()": {
+      "ai_tool": [
+        [
+          {
+            "node": "Shop Floor Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search_sop()": {
+      "ai_tool": [
+        [
+          {
+            "node": "Shop Floor Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "record_event()": {
+      "ai_tool": [
+        [
+          {
+            "node": "Shop Floor Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "escalate()": {
+      "ai_tool": [
+        [
+          {
+            "node": "Shop Floor Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shop Floor Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Mistral": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Shop Floor Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Shop Floor Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ee034412-7869-4d81-807c-e10f66934960",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8b53ed126c7fd646930ddb048d12306b77ab0d700a0098e2564ca05aaacf5a0f"
+  },
+  "nodeGroups": [],
+  "id": "OtjVLTkOY3d1g3vh",
+  "tags": []
+}
