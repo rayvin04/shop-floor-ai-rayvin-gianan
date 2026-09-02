@@ -88,7 +88,7 @@ function Index() {
           <div
             id="n8n-chat"
             className="w-full overflow-hidden rounded-[18px]"
-            style={{ height: "80vh", minHeight: "480px" }}
+            style={{ height: "min(80vh, calc(100vh - 320px))", minHeight: "440px" }}
             aria-label="Shop Floor Agent chat"
           />
         </section>
