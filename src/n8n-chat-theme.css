@@ -204,8 +204,9 @@
 
 /* Fill the card: transcript grows, composer stays pinned to the bottom */
 #n8n-chat .chat-layout {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
 }
 
 #n8n-chat .chat-body {

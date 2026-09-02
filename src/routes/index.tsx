@@ -87,7 +87,8 @@ function Index() {
         <section className="mx-auto w-full rounded-[24px] border border-[#E5E7EB] bg-white p-4 shadow-[0_12px_40px_rgba(15,23,42,0.08)] sm:p-6">
           <div
             id="n8n-chat"
-            className="h-[80vh] min-h-[480px] w-full overflow-hidden rounded-[18px]"
+            className="w-full overflow-hidden rounded-[18px]"
+            style={{ height: "80vh", minHeight: "480px" }}
             aria-label="Shop Floor Agent chat"
           />
         </section>
