@@ -8,7 +8,7 @@
  * Design system definition.
  *
  * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
+ * classes (e.g. --color-primary -> bg-primary, --color-primary).
  *
  * The :root and .dark blocks define the actual color values using oklch.
  * All colors MUST use oklch format.
@@ -95,6 +95,60 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+
+  /* Shop Floor Agent brand palette */
+  --sf-primary: #dc2626;
+  --sf-primary-hover: #b91c1c;
+  --sf-secondary: #2563eb;
+  --sf-background: #ffffff;
+  --sf-surface: #f8fafc;
+  --sf-border: #e5e7eb;
+  --sf-text: #1f2937;
+  --sf-muted: #6b7280;
+
+  /* n8n chat theme overrides (mapped to @n8n/chat@1.36.1 variable names) */
+  --chat--color--primary: #dc2626;
+  --chat--color--primary-shade-50: #b91c1c;
+  --chat--color--primary--shade-100: #991b1b;
+
+  --chat--color--secondary: #2563eb;
+  --chat--color-secondary-shade-50: #1d4ed8;
+
+  --chat--color-white: #ffffff;
+  --chat--color-light: #f8fafc;
+  --chat--color-light-shade-50: #f1f5f9;
+  --chat--color-light-shade-100: #e5e7eb;
+
+  --chat--color-medium: #cbd5e1;
+  --chat--color-dark: #1f2937;
+  --chat--color-disabled: #94a3b8;
+
+  --chat--border-radius: 16px;
+
+  --chat--spacing: 1rem;
+
+  --chat--window--width: 100%;
+  --chat--window--height: 100%;
+
+  --chat--header-height: 72px;
+  --chat--header--background: var(--chat--color--primary);
+  --chat--header--color: var(--chat--color-white);
+
+  --chat--message--font-size: 15px;
+
+  --chat--heading--font-size: 1.1rem;
+
+  --chat--input--font-size: 15px;
+
+  --chat--textarea--height: 56px;
+
+  --chat--input--send--button--background: var(--chat--color--primary);
+  --chat--input--send--button--color: var(--chat--color-white);
+  --chat--input--send--button--background-hover: var(--chat--color--primary-shade-50);
+  --chat--input--send--button--color-hover: var(--chat--color-white);
+
+  --chat--body--background: var(--chat--color-light);
+  --chat--footer--background: var(--chat--color-light);
 }
 
 .dark {
@@ -141,4 +195,44 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+/* n8n chat container polish */
+#n8n-chat {
+  background-color: var(--chat--color-white);
+  border-radius: var(--chat--border-radius);
+  box-shadow: 0 10px 40px -12px rgba(0, 0, 0, 0.08);
+}
+
+#n8n-chat .chat-window {
+  border-radius: var(--chat--border-radius);
+  border: 1px solid var(--chat--color-light-shade-100);
+}
+
+#n8n-chat .chat-send-button {
+  background-color: var(--chat--color-primary);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+#n8n-chat .chat-send-button:hover {
+  background-color: var(--chat--color-primary-shade-50);
+}
+
+#n8n-chat .chat-send-button:active {
+  transform: scale(0.96);
+}
+
+#n8n-chat .chat-input {
+  background-color: var(--chat--color-light);
+  border-radius: var(--chat--border-radius);
+  border: 1px solid var(--chat--color-light-shade-100);
+  font-size: var(--chat--input--font-size);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#n8n-chat .chat-input:focus {
+  border-color: var(--chat--color-primary);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+  outline: none;
 }
